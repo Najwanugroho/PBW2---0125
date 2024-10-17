@@ -11,7 +11,11 @@ class UpdatebukuRequest extends FormRequest
      */
     public function authorize(): bool
     {
+<<<<<<< HEAD
         return false;
+=======
+        return True;
+>>>>>>> ccb80d8 (modul pbw)
     }
 
     /**

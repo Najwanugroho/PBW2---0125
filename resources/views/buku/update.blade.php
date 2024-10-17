@@ -2,27 +2,23 @@
     <div class="container">
         <div class="row p-lg-3">
             <div class="col">
-                <form action="/buku" method="POST" enctype="multipart/form-data">
+                <form action="/buku/{{ $buku->id }}" method="POST" enctype="multipart/form-data">
+                    @method('put')
                     @csrf
                     <form>
-                        <h1>Tambah Buku</h1>
+                        <h1>Ubah Buku</h1>
                         <div class="mb-3">
                             <label for="judul" class="form-label">Judul</label>
                             <input type="text" class="form-control @error('judul') is-invalid @enderror"
-                                value="{{ old('judul') }}" id="judul" name="judul">
+                                value="{{ $buku->judul }}" id="judul" name="judul">
                             @error('judul')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-<<<<<<< HEAD
-                            <label for="penulis" class="form-label">Penulis</label>
-                            <input type="text" class="form-control @error('penulis') is-invalid @enderror"
-=======
                             <label for="penulisan" class="form-label">Penulis</label>
                             <input type="text" class="form-control @error('penulisan') is-invalid @enderror"
->>>>>>> ccb80d8 (modul pbw)
-                                value="{{ old('penulis') }}" id="penulis" name="penulis">
+                                value="{{ $buku->penulis }}" id="penulis" name="penulis">
                             @error('penulis')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -32,9 +28,9 @@
                             <select class="form-select form-select-md mb-3 @error('kategori') is-invalid @enderror"
                                 id="kategori" name="kategori">
                                 <option value="" selected>Pilih Kategori</option>
-                                <option value="Novel">Novel</option>
-                                <option value="Komik">Komik</option>
-                                <option value="Biografi">Biografi</option>
+                                <option value="Novel" {{ $buku->kategori == 'Novel' ? 'Selected' : '' }}>Novel</option>
+                                <option value="Komik" {{ $buku->kategori == 'Komik' ? 'Selected' : '' }}>Komik</option>
+                                <option value="Biografi" {{ $buku->kategori == 'Biografi' ? 'Selected' : '' }}>Biografi</option>
                             </select>
                             @error('kategori')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -42,15 +38,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="sampul" class="form-label">Sampul Buku</label>
+                            @if ($buku->sampul)
+                            <img src="{{ asset('storage/' . $buku->sampul) }}" class="img-preview img-fluid mb-3 d-block" width="250px">
+                            @else
                             <img class="img-preview img-fluid mb-3" width="250px">
-                            <input class="form-control @error('sampul') is-invalid @enderror" type="file" id="sampul"
-                                name="sampul" onchange="previewImage()">
+                            @endif
+                            <input type="hidden" name="sampulLama" value="{{ $buku->sampul }}">
+                            <input class="form-control @error('sampul') is-invalid @enderror" type="file" 
+                                value="{{ $buku->sampul }}" id="sampul" name="sampul" onchange="previewImage()">
                             @error('sampul')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-
                     </form>
             </div>
         </div>
